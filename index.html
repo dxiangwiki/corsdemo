@@ -2,23 +2,23 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Baike API CORS Test</title>
+    <title>视频播放接口测试</title>
 </head>
 <body>
-    <h3>请求结果</h3>
+    <h3>视频接口请求结果</h3>
     <div id="result"></div>
     <script>
         const resultDom = document.getElementById('result');
-        const apiUrl = "https://baike.baidu.com/lemma/api/lemmapv?id=ab3b24ecc2bff7ea6a4d9166&r=" + Math.random();
+        // 替换成你的视频接口地址
+        const apiUrl = "https://baike.baidu.com/xxx/videoapi";
 
         async function runTest() {
-            resultDom.innerText = "正在发起请求...\n";
+            resultDom.innerText = "正在发起视频接口请求...\n";
             try {
                 const resp = await fetch(apiUrl, {
                     method: "GET",
                     headers: {
                         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101"
-                        // 这里尝试加Cookie也无效，浏览器会禁止自定义Cookie header
                     }
                 });
                 const json = await resp.json();
