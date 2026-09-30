@@ -2,18 +2,29 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>视频播放接口测试</title>
+    <title>视频接口 - CORS代理测试</title>
+    <style>
+        body {font-family: system-ui; padding: 20px;}
+        #result {white-space: pre-wrap; margin-top:20px;}
+    </style>
 </head>
 <body>
-    <h3>视频接口请求结果</h3>
-    <div id="result"></div>
+    <h3>视频播放接口（代理转发）</h3>
+    <button id="btn">发起请求</button>
+    <div id="result">等待点击...</div>
+
     <script>
         const resultDom = document.getElementById('result');
-        // 替换成你的视频接口地址
-        const apiUrl = "https://baike.baidu.com/xxx/videoapi";
+        const btn = document.getElementById('btn');
 
-        async function runTest() {
-            resultDom.innerText = "正在发起视频接口请求...\n";
+        // 👉这里替换成你的视频接口完整地址
+        const originApi = "https://baike.baidu.com/xxx/videoapi";
+        // 公共CORS代理
+        const proxy = "https://corsproxy.io/?";
+        const apiUrl = proxy + encodeURIComponent(originApi);
+
+        btn.onclick = async function() {
+            resultDom.innerText = "正在请求...\n";
             try {
                 const resp = await fetch(apiUrl, {
                     method: "GET",
@@ -22,13 +33,12 @@
                     }
                 });
                 const json = await resp.json();
-                resultDom.innerText = "成功返回数据：" + JSON.stringify(json);
+                resultDom.innerText = "✅成功拿到返回数据：\n" + JSON.stringify(json, null, 2);
             } catch (err) {
-                resultDom.innerText = "捕获错误：" + err.message + "\n";
+                resultDom.innerText = "❌失败：" + err.message + "\n";
                 console.error(err);
             }
         }
-        runTest();
     </script>
 </body>
 </html>
